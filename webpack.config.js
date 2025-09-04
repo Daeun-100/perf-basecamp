@@ -7,14 +7,17 @@ module.exports = {
   entry: './src/index.tsx',
   resolve: { extensions: ['.ts', '.tsx', '.js', '.jsx'] },
   output: {
-    filename: 'bundle.js',
+    filename: '[name].[contenthash].js',
     path: path.join(__dirname, '/dist'),
     clean: true
   },
   devServer: {
     hot: true,
     open: true,
-    historyApiFallback: true
+    historyApiFallback: true,
+    static: {
+      directory: path.join(__dirname, 'public')
+    }
   },
   devtool: 'source-map',
   plugins: [
