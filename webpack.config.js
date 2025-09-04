@@ -53,8 +53,36 @@ module.exports = {
   },
   optimization: {
     minimize: true,
+    // Tree shaking 최적화
+    usedExports: true,
+    sideEffects: false,
     splitChunks: {
-      chunks: 'all' // 코드 분리 (node_modules, 공통 모듈 등)
+      chunks: 'all',
+      cacheGroups: {
+        // react-icons를 별도 청크로 분리하여 Tree Shaking 최적화
+        reactIcons: {
+          test: /[\\/]node_modules[\\/]react-icons[\\/]/,
+          name: 'react-icons',
+          chunks: 'all',
+          priority: 20,
+          enforce: true
+        },
+        // vendor 라이브러리
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all',
+          priority: 10
+        },
+        // 공통 코드
+        common: {
+          name: 'common',
+          minChunks: 2,
+          chunks: 'all',
+          priority: 5,
+          reuseExistingChunk: true
+        }
+      }
     }
   }
 };
