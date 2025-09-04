@@ -49,6 +49,9 @@ module.exports = {
     ]
   },
   optimization: {
-    minimize: false
+    minimize: true,
+    splitChunks: {
+      chunks: 'all' // 코드 분리 (node_modules, 공통 모듈 등)
+    }
   }
 };
