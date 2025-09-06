@@ -5,7 +5,9 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: './src/index.tsx',
-  resolve: { extensions: ['.ts', '.tsx', '.js', '.jsx'] },
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js', '.jsx']
+  },
   output: {
     filename: '[name].[contenthash].js',
     path: path.join(__dirname, '/dist'),
@@ -65,11 +67,14 @@ module.exports = {
           name: 'react-icons',
           chunks: 'all',
           priority: 20,
-          enforce: true
+          enforce: true,
+          // react-icons의 tree-shaking을 위한 추가 설정
+          minSize: 0,
+          maxSize: 100000
         },
-        // vendor 라이브러리
+        // vendor 라이브러리 (react-icons 제외)
         vendor: {
-          test: /[\\/]node_modules[\\/]/,
+          test: /[\\/]node_modules[\\/](?!react-icons)/,
           name: 'vendors',
           chunks: 'all',
           priority: 10
